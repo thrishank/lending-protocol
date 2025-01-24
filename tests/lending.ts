@@ -65,7 +65,7 @@ describe("lending", () => {
         signer: user.publicKey,
       })
       .signers([user])
-      .rpc();
+      .rpc({ commitment: "confirmed" });
   });
 
   it("init bank", async () => {
@@ -99,6 +99,13 @@ describe("lending", () => {
         mint: mint,
         tokenProgram: TOKEN_PROGRAM_ID,
       })
+      .signers([user])
+      .rpc({ commitment: "confirmed" });
+  });
+  it("user withdraw", async () => {
+    await program.methods
+      .userWithdraw(new BN(1))
+      .accounts({ user: user.publicKey, mint, tokenProgram: TOKEN_PROGRAM_ID })
       .signers([user])
       .rpc({ commitment: "confirmed" });
   });
